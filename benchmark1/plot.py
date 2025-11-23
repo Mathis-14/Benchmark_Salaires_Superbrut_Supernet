@@ -65,6 +65,19 @@ def main():
     savefig(OUT_DIR / "taux_supernet_effectif_supernet_sur_superbrut.png")
     plt.close()
 
+    # ====== 2.5) Taux supernet effectif en fonction du supernet perçu ======
+    plt.figure(figsize=(10, 6))
+    plt.plot(df["salaire_net_apres_impot"], df["taux_supernet_sur_superbrut"], 
+             linewidth=2, color="green")
+    plt.title("Taux supernet effectif (supernet / superbrut) en fonction du supernet perçu", 
+              fontsize=14, fontweight="bold")
+    plt.xlabel("Salaire net après impôt annuel (€) (supernet)")
+    plt.ylabel("Supernet / Superbrut")
+    plt.grid(True, alpha=0.3)
+    plt.ylim(0, 1)
+    savefig(OUT_DIR / "taux_supernet_effectif_en_fonction_supernet.png")
+    plt.close()
+
     # ====== 3) Superbrut -> Supernet RECONSTRUIT via le taux effectif ======
     df["supernet_reconstruit"] = df["taux_supernet_sur_superbrut"] * df["cout_total_employeur"]
 
@@ -80,6 +93,24 @@ def main():
     plt.grid(True, alpha=0.3)
     plt.legend()
     savefig(OUT_DIR / "superbrut_vers_supernet_reconstruit.png")
+    plt.close()
+    
+    # ====== 3.5) Superbrut -> Net (avant impôt) ======
+    plt.figure(figsize=(10, 6))
+    plt.plot(df["cout_total_employeur"], df["salaire_net"], 
+             label="Net avant impôt", linewidth=2, color="blue")
+    # Ligne de référence y=x pour visualiser l'écart
+    max_val = max(df["cout_total_employeur"].max(), df["salaire_net"].max())
+    plt.plot([0, max_val], [0, max_val], 'k--', alpha=0.2, linewidth=1, label="Référence y=x")
+    # Zone de différence pour visualiser l'écart (cotisations)
+    plt.fill_between(df["cout_total_employeur"], df["salaire_net"], df["cout_total_employeur"], 
+                     alpha=0.2, color="orange", label="Écart (cotisations patronales)")
+    plt.title("Superbrut → Net (avant impôt)", fontsize=14, fontweight="bold")
+    plt.xlabel("Coût total employeur annuel (€) (superbrut)")
+    plt.ylabel("Salaire net avant impôt annuel (€)")
+    plt.grid(True, alpha=0.3)
+    plt.legend()
+    savefig(OUT_DIR / "superbrut_vers_net.png")
     plt.close()
     
     # ====== 4) NOUVEAU: Comparaison Brut vs Superbrut ======

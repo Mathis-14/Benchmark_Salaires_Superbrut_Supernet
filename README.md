@@ -36,10 +36,11 @@ Pour chaque salaire brut, l'API calcule :
 
 ### 3. Visualisations
 
-Le script `plot.py` génère 7 graphiques dans le dossier `graphs/` :
+Le script `plot.py` génère 8 graphiques dans le dossier `graphs/` :
 - Taux net effectif (net / brut)
 - Taux supernet effectif (supernet / superbrut)
 - Superbrut → Supernet reconstruit
+- Superbrut → Net (avant impôt)
 - Comparaison Brut vs Superbrut
 - Impact de l'impôt (Net avant vs après impôt)
 - Taux d'imposition effectif
@@ -56,9 +57,15 @@ Le script `plot.py` génère 7 graphiques dans le dossier `graphs/` :
 
 - **Taux net/brut moyen** : **79,78%**
   - Le salarié perçoit en moyenne ~80% de son salaire brut (avant impôt)
+  REMARQUE : Ce taux n'est pas pertinent car il ne reflète pas la richesse réelle dépensée ou perçue par respectivement l'employeur/l'employé => d'où nécessité d'intégrer le superbrut et le supernet.
   
 - **Taux supernet/superbrut moyen** : **40,65%**
   - Le salarié perçoit en moyenne seulement **40,65%** de ce que l'employeur paie réellement
+    Voir graphe taux taux_supernet_effectif_supernet_sur_superbrut
+    Pour 15 000 € de coût réel employeur (superbrut) → ~74% revient à l'employé
+    Pour 50 000€ de coût réel emplpoyeur (superbrut) → ~54% revient à l'employé
+    Pour 500 000€ de coût employeur → ~36% revient à l'employé
+
   
 - **Taux d'imposition moyen** (sur salaires imposables) : **30,42%**
   - Sur le salaire net avant impôt, l'impôt représente en moyenne 30,42%
@@ -169,6 +176,7 @@ benchmark1/
 │   ├── brut_vs_superbrut.png
 │   ├── brut_vs_supernet.png
 │   ├── impact_impot.png
+│   ├── superbrut_vers_net.png
 │   ├── superbrut_vers_supernet_reconstruit.png
 │   ├── taux_imposition.png
 │   ├── taux_net_effectif_net_sur_brut.png
